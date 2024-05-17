@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
@@ -15,14 +16,24 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+const createRandomImage = () => {
+  const width = getRandomInt(100, 1920);
+  const height = getRandomInt(100, 1080);
+  return `https://source.unsplash.com/random/${width}x${height}`;
+}
+
+
 const createItems = (numberToCreate = 30) => {
   const randomNum = getRandomInt(0, 1);
 
   const newItems = Array.from({ length: numberToCreate }, (v, k) => {
     const newId = uuid().toString() + (Math.random() * 100).toString();
+    const hasImg = getRandomInt(0, 1) === 1;
+    const newImg = hasImg ? createRandomImage() : null;
     return {
       id: newId,
       title: `title-${newId}`,
+      img: newImg,
       description: randomNum ? faker.lorem.sentences() : faker.lorem.sentence()
     };
   });
