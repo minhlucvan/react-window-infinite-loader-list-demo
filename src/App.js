@@ -63,6 +63,19 @@ class App extends Component {
 
   componentDidMount() {
     this.props.loadMore();
+    const listRef = this.listRef;
+    setTimeout(() => {
+      const listView = listRef.current._outerRef;
+      listView.addEventListener("wheel", function(e) {
+        // reverse the scroll direction
+        e.preventDefault();
+        e.stopPropagation();
+  
+        console.log('wheel event', e.deltaY);
+        // directly manipulate the scroll behavior
+        listView.scrollTop -= e.deltaY;
+      });
+    }, 1000);
   }
 
   loadNextPage = () => {
